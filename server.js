@@ -10,6 +10,29 @@ const runner            = require('./test-runner');
 
 const app = express();
 
+//import helmet (helmetJS) ------------- added!
+const helmet = require('helmet')
+
+//set the content security policy to only allow loading of scripts and css from your server ------------- added!
+app.use(helmet({
+  contentSecurityPolicy: {
+    //useDefaults: false,
+    directives: {
+      //defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'"]
+    }
+  }    
+}))
+/*app.use(helmet.contentSecurityPolicy({
+  //useDefaults: false,
+    directives: {
+      //defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'"]
+    }
+}))*/
+
 app.use('/public', express.static(process.cwd() + '/public'));
 
 app.use(cors({origin: '*'})); //For FCC testing purposes only
